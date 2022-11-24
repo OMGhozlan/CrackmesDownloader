@@ -173,7 +173,7 @@ if __name__ == "__main__":
       data_fields = get_fields(file)
     
       file_details = {key:value for key, value in zip(table_header, get_fields(file))}    
-      print(YELLOWED(ITALICED(f"[+] Processing {file_details['Name']}..")), end='\r')    
+      print(YELLOWED(ITALICED(f"[+] Processing {file_details['Name']}..")), end='\r' if c < match_count else '\n')    
       file_details.update({"Download Link" : download_link})
       matching_files[c] = file_details
 
@@ -183,7 +183,7 @@ if __name__ == "__main__":
       is_new = download_file(download_link, c, download_path)
 
       if is_new:
-        with open('database.csv', 'a') as db:
+        with open('database.csv', 'a', encoding='utf-16') as db:
           db.write(",".join(data_fields) + f",{download_link}\n")
   except KeyboardInterrupt:  
     print(REDED("\n[-]Caught interrupt signal, terminating..."))
